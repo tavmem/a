@@ -111,7 +111,8 @@ const MSSymbol& MSFloat::symbol(void)
 
 MSError::ErrorStatus MSFloat::internalSet(const char *pString_)
 {
-  char	*np,buf[512];
+  const char	*np;
+  char          buf[512];
   
   _real=0.0;
   _flags=MSFloat::Set; // clear the Valid bit, i.e. isValid==MSFalse
@@ -128,7 +129,7 @@ MSError::ErrorStatus MSFloat::internalSet(const char *pString_)
    { return (MSError::BadReal); } // Disallow leading commas
   
   // Make sure we don't save too many characters after the decimal
-  char *decimal=strchr(pString_,'.');
+  const char *decimal=strchr(pString_,'.');
   if ((decimal!=0)&&(strlen(decimal+1)>MSRealMaximumLength))
    { return (MSError::IntTooBig); }
   strcpy(buf,pString_);

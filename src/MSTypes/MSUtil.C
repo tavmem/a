@@ -25,7 +25,7 @@ MSBoolean MSUtil::hasAlpha(register const char *s_)
 void MSUtil::comma(const char *fromBuffer_,char *toBuffer_,int size_)
 {
   int places,len,i,j;
-  char *cp;
+  const char *cp;
   
   if ((cp=strchr(fromBuffer_,'.'))!=NULL)
    {
