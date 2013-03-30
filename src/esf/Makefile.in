@@ -95,17 +95,7 @@ install_sh = @install_sh@
 lib_LTLIBRARIES = libesf.la
 
 libesf_la_SOURCES = \
-	alsf.c \
-	esfn.c \
-	fi.c \
-	fmt.c \
-	info.c \
-	ssr.c \
-	index.c \
-	pack.c \
-	primpro.c \
 	searchPATH.c \
-	kcheck.c \
 	dyld2.c
 
 
@@ -117,8 +107,7 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 
 libesf_la_LDFLAGS =
 libesf_la_LIBADD =
-am_libesf_la_OBJECTS = alsf.lo esfn.lo fi.lo fmt.lo info.lo ssr.lo \
-	index.lo pack.lo primpro.lo searchPATH.lo kcheck.lo dyld2.lo
+am_libesf_la_OBJECTS = searchPATH.lo dyld2.lo
 libesf_la_OBJECTS = $(am_libesf_la_OBJECTS)
 
 DEFS = @DEFS@

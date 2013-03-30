@@ -93,28 +93,13 @@ am__quote = @am__quote@
 install_sh = @install_sh@
 
 SUBDIRS = \
-	IPC \
-	cxs \
-	cxb \
-	AplusGUI \
-	cxsys \
-	cxc \
 	esf \
 	a \
 	dap \
-	MSGUI \
-	MSIPC \
-	MSTypes \
 	main \
-	html \
-	contrib \
-	acore \
-	autils \
 	lisp.1 \
 	lisp.0 \
-	fonts \
-	tutorials \
-	app-defaults
+	fonts
 
 
 EXTRA_DIST = LICENSE

@@ -25,6 +25,8 @@
 #include <a/arthur.h>
 extern I Tf;
 
+#define _INTERPRETER_ONLY
+
 /* internal macro declarations */
 #define ACKNOWLEDGE_LICENSE_FILE  ".apluslicok"
 #define BANNER "A+"
@@ -377,13 +379,13 @@ static void xi(C* argv0)
 {
 	ovliInstall();
 	dyldSlowInstall(argv0);	/* both dyme 0 and dyme 2 */
-	esfInstall();
+	/* 	esfInstall();  */
 #if !defined(_INTERPRETER_ONLY)
 	CppInstall();
 #endif
-	cInstall();
-	sysInstall();
-	binaryInstall();
+	/*	cInstall();
+		sysInstall();
+		binaryInstall();  */
 #if !defined(_INTERPRETER_ONLY)
 	/* TK set backing store */
 	s_backingStoreOption(_backing_store);

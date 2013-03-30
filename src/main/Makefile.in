@@ -111,33 +111,14 @@ CFLAGS = @CFLAGS@ -DBSTUB
 INCLUDES = -I.. $(X_INCLUDES)
 
 aplus_LDADD = \
-	$(top_srcdir)/src/IPC/libIPC.la \
-	$(top_srcdir)/src/cxs/libcxs.la \
-	$(top_srcdir)/src/cxb/libcxb.la \
-	$(top_srcdir)/src/AplusGUI/libAplusGUI.la \
-	$(top_srcdir)/src/cxsys/libcxsys.la \
-	$(top_srcdir)/src/cxc/libcxc.la \
 	$(top_srcdir)/src/esf/libesf.la \
 	$(top_srcdir)/src/a/liba.la \
-	$(top_srcdir)/src/dap/libdap.la \
-	$(top_srcdir)/src/MSGUI/libMSGUI.la \
-	$(top_srcdir)/src/MSIPC/libMSIPC.la \
-	$(top_srcdir)/src/MSTypes/libMSTypes.la 
-
+	$(top_srcdir)/src/dap/libdap.la 
 
 aplus_LDFLAGS = \
-	-L$(top_srcdir)/src/IPC \
-	-L$(top_srcdir)/src/cxs \
-	-L$(top_srcdir)/src/cxb \
-	-L$(top_srcdir)/src/AplusGUI \
-	-L$(top_srcdir)/src/cxsys \
-	-L$(top_srcdir)/src/cxc \
 	-L$(top_srcdir)/src/esf \
 	-L$(top_srcdir)/src/a \
 	-L$(top_srcdir)/src/dap \
-	-L$(top_srcdir)/src/MSGUI \
-	-L$(top_srcdir)/src/MSIPC \
-	-L$(top_srcdir)/src/MSTypes \
 	$(X_LIBS) $(LIBS)
 
 subdir = src/main
@@ -149,15 +130,8 @@ PROGRAMS = $(bin_PROGRAMS)
 am_aplus_OBJECTS = mainC.$(OBJEXT) aplus_main.$(OBJEXT) \
 	aplus_uext.$(OBJEXT) matherr.$(OBJEXT)
 aplus_OBJECTS = $(am_aplus_OBJECTS)
-aplus_DEPENDENCIES = $(top_srcdir)/src/IPC/libIPC.la \
-	$(top_srcdir)/src/cxs/libcxs.la $(top_srcdir)/src/cxb/libcxb.la \
-	$(top_srcdir)/src/AplusGUI/libAplusGUI.la \
-	$(top_srcdir)/src/cxsys/libcxsys.la \
-	$(top_srcdir)/src/cxc/libcxc.la $(top_srcdir)/src/esf/libesf.la \
-	$(top_srcdir)/src/a/liba.la $(top_srcdir)/src/dap/libdap.la \
-	$(top_srcdir)/src/MSGUI/libMSGUI.la \
-	$(top_srcdir)/src/MSIPC/libMSIPC.la \
-	$(top_srcdir)/src/MSTypes/libMSTypes.la
+aplus_DEPENDENCIES = \
+	$(top_srcdir)/src/a/liba.la $(top_srcdir)/src/dap/libdap.la
 
 DEFS = @DEFS@
 DEFAULT_INCLUDES =  -I. -I$(srcdir)
