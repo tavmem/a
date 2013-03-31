@@ -13917,7 +13917,7 @@ _ACEOF
     fi
 
 
-                                                                                                                                                                                                                                                                                                                                                    ac_config_files="$ac_config_files Makefile config/Makefile src/Makefile src/IPC/Makefile src/cxs/Makefile src/cxb/Makefile src/AplusGUI/Makefile src/cxsys/Makefile src/cxc/Makefile src/esf/Makefile src/a/Makefile src/app-defaults/Makefile src/dap/Makefile src/MSGUI/Makefile src/MSIPC/Makefile src/MSTypes/Makefile src/main/Makefile src/lisp.0/Makefile src/fonts/Makefile src/fonts/TrueType/Makefile src/fonts/X11/Makefile src/fonts/X11/bdf/Makefile src/fonts/X11/pcf/Makefile src/html/Makefile src/html/tutorials/Makefile src/html/tutorials/graphs/Makefile src/html/tutorials/s.tutorials/Makefile src/contrib/Makefile src/acore/Makefile src/autils/Makefile src/tutorials/Makefile src/tutorials/graphs/Makefile src/tutorials/s.tutorials/Makefile src/lisp.1/Makefile"
+                                                                                                                                                                                                                                                                                                                                                    ac_config_files="$ac_config_files Makefile config/Makefile src/Makefile src/esf/Makefile src/a/Makefile src/app-defaults/Makefile src/dap/Makefile src/main/Makefile src/lisp.0/Makefile src/fonts/Makefile src/fonts/TrueType/Makefile src/fonts/X11/Makefile src/fonts/X11/bdf/Makefile src/fonts/X11/pcf/Makefile src/html/Makefile src/html/tutorials/Makefile src/html/tutorials/graphs/Makefile src/html/tutorials/s.tutorials/Makefile src/contrib/Makefile src/acore/Makefile src/autils/Makefile src/tutorials/Makefile src/tutorials/graphs/Makefile src/tutorials/s.tutorials/Makefile src/lisp.1/Makefile"
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
 # tests run on this system so they can be shared between configure
@@ -14495,19 +14495,10 @@ do
   "Makefile" ) CONFIG_FILES="$CONFIG_FILES Makefile" ;;
   "config/Makefile" ) CONFIG_FILES="$CONFIG_FILES config/Makefile" ;;
   "src/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
-  "src/IPC/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/IPC/Makefile" ;;
-  "src/cxs/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/cxs/Makefile" ;;
-  "src/cxb/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/cxb/Makefile" ;;
-  "src/AplusGUI/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/AplusGUI/Makefile" ;;
-  "src/cxsys/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/cxsys/Makefile" ;;
-  "src/cxc/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/cxc/Makefile" ;;
   "src/esf/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/esf/Makefile" ;;
   "src/a/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/a/Makefile" ;;
   "src/app-defaults/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/app-defaults/Makefile" ;;
   "src/dap/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/dap/Makefile" ;;
-  "src/MSGUI/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/MSGUI/Makefile" ;;
-  "src/MSIPC/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/MSIPC/Makefile" ;;
-  "src/MSTypes/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/MSTypes/Makefile" ;;
   "src/main/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/main/Makefile" ;;
   "src/lisp.0/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/lisp.0/Makefile" ;;
   "src/fonts/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/fonts/Makefile" ;;
