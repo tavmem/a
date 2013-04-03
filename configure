@@ -14507,9 +14507,6 @@ do
   "src/fonts/X11/bdf/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/fonts/X11/bdf/Makefile" ;;
   "src/fonts/X11/pcf/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/fonts/X11/pcf/Makefile" ;;
   "src/html/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/html/Makefile" ;;
-  "src/html/tutorials/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/html/tutorials/Makefile" ;;
-  "src/html/tutorials/graphs/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/html/tutorials/graphs/Makefile" ;;
-  "src/html/tutorials/s.tutorials/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/html/tutorials/s.tutorials/Makefile" ;;
   "src/contrib/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/contrib/Makefile" ;;
   "src/acore/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/acore/Makefile" ;;
   "src/autils/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/autils/Makefile" ;;

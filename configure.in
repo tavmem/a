@@ -274,9 +274,6 @@ AC_OUTPUT(\
 	src/fonts/X11/bdf/Makefile \
 	src/fonts/X11/pcf/Makefile \
 	src/html/Makefile \
-	src/html/tutorials/Makefile \
-	src/html/tutorials/graphs/Makefile \
-	src/html/tutorials/s.tutorials/Makefile \
         src/contrib/Makefile \
         src/acore/Makefile \
         src/autils/Makefile \
