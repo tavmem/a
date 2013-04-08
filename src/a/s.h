@@ -28,7 +28,7 @@
 #  include <sys/termio.h>
 #  define SH(x) ((unsigned long) (sprintf(b,s,x),strlen(b)))
 # else
-#  if defined(linux) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__APPLE__)
+#  if defined(linux) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__APPLE__) || defined(__CYGWIN__)
 #   define Vol
 #   include <sys/termios.h>
 #   define SH(x) (sprintf(b,s,x),strlen(b))

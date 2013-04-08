@@ -28,7 +28,7 @@ extern fd_set *fds_x;
 extern fd_set *fds_xa;
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX) || defined(linux)
+#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX) || defined(linux) || defined(__CYGWIN__)
 # ifdef __cplusplus
 extern "C" {
 # endif

@@ -20,7 +20,7 @@
 #include <dap/balloc.h>
 #undef min
 #undef max
-#if defined(__VISUAL_C_2_0__) || defined(_HP) || defined(linux) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__APPLE__)
+#if defined(__VISUAL_C_2_0__) || defined(_HP) || defined(linux) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__APPLE__) || defined(__CYGWIN__)
 #define iszero(x) (x==0)
 #endif
 

@@ -247,7 +247,7 @@ static int GetSrcInformation(void *src, I iBytesRead, I noSizeChk,
     (a32BigHeader.t == 2));
   */
 
-#if defined(linux)
+#if defined(linux) || defined(__CYGWIN__)
 
 #if defined(__ia64) || defined(__x86_64)
   /* Try 64-bit little endian */

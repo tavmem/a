@@ -804,7 +804,7 @@ H1(aen){A z;ND1 F1 MT(1)NANMF(F,F,exp(*w))}
 H1(pit){A z;ND1 F1 MT(1)MF(F,F,3.14159265358979323846**w,FALSE)}
 H2(sqr){A z;ND2 F1 
  if(!w->r&&It==w->t&&2==*w->p){MT(1)MF(F,F,*w**w,FALSE)}R ds(a,w,15);}
-#if defined(_AIX) || defined(HAVE_SVR4) || defined(linux) || defined(__FreeBSD__) || defined (__NetBSD__) || defined(__APPLE__)
+#if defined(_AIX) || defined(HAVE_SVR4) || defined(linux) || defined(__FreeBSD__) || defined (__NetBSD__) || defined(__APPLE__) || defined(__CYGWIN__)
 /* Z F imaxmin[2]={2147483648.0-CT,-2147483648.0}; */
 Z H1(fli){A z;MT(0){
   I *r=(I*)z->p,*t=r+a->n;F x,*w=(F*)a->p;

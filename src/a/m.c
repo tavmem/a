@@ -235,7 +235,7 @@ Z void sigf(void){if(suppressFpeDomain)++nExternalFPE; else q=9;}
 #endif
 
 #include <sys/mman.h>
-#if defined(_AIX) || defined(HAVE_SVR4) || defined(linux) || defined(_HP) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__APPLE__)
+#if defined(_AIX) || defined(HAVE_SVR4) || defined(linux) || defined(_HP) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__APPLE__) || defined(__CYGWIN__)
 #ifdef __sgi
 Z unsigned k1=0x20000000,k2=0x100000;
 #else

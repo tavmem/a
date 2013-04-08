@@ -449,7 +449,7 @@ Z H1(floatToInt){
   R(I)z;
 }
 
-#if defined(_AIX) || defined(HAVE_SVR4) || defined(__sgi) || defined(__osf__) || defined(linux) || defined(_HP) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__APPLE__)
+#if defined(_AIX) || defined(HAVE_SVR4) || defined(__sgi) || defined(__osf__) || defined(linux) || defined(_HP) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__APPLE__) || defined(__CYGWIN__)
 Z H1(f_j){
   A z; F f;
   F imaxmin[2];

@@ -264,7 +264,7 @@ Z I readDoubleFromString(C **s,F *d)
   j=strncmp(r,"Inf",3)||isal(r[3]);
   if(j&&!isdi(r['.'==*r]))R 0;
   if(!j)*s=r+3,*d=Inf;
-#ifdef linux
+#if defined(linux) || defined(__CYGWIN__)
 /* Linux's strtod differs from other implementations in that it also */
 /* converts hexadecimal values.  This causes problems for A+ code line */
 /* y,@0x or y,@0x22 where it removes both the 0 and the x */

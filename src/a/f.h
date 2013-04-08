@@ -93,7 +93,7 @@ extern int nan_bits;
 #define NAN_CHECK(v,xx) {F vv; vv=xx; if( isnan(vv) ) nan_bits=1; v=vv;}
 
 
-#elif defined(linux) || defined(_HP) || defined(__APPLE__)
+#elif defined(linux) || defined(_HP) || defined(__APPLE__) || defined(linux)
 #if defined(__APPLE__)
 #include <CoreServices/CoreServices.h>
 #else

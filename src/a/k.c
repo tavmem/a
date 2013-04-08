@@ -40,7 +40,7 @@ static I aplusPageMask=4096-1;
 
 static int msyncFlag=MS_ASYNC;	/* Default flag for msync */
 
-#if defined(linux) || defined(__sgi)
+#if defined(linux) || defined(__sgi) || defined(__CYGWIN__)
   static int msyncMode=1;		/* Default msyncMode is on*/
 #else
   static int msyncMode=0;		/* Default msyncMode is off*/
