@@ -1,3 +1,18 @@
+
+A stripped down version that simply builds the interpreter.
+The immediate purpose was to port the interpreter to Cygwin.
+
+Steps for installation:
+1) git clone git@github.com:tavmem/a.git
+2) cd a
+3) CFLAGS=-O2 CXXFLAGS=-O2 ./configure --prefix=/home/USERID/a/src
+4) make install
+
+The resulting interpreter executable is 
+   /home/USERID/a/src/bin/a+.exe
+which can be moved anywhere you like.   (e.g.  /usr/local/bin )
+************************************************************************
+
 aplus-fsf-4.20-0 December 30, 2003
 
 A complete compiler/platform grid is found at the end of this file.
