@@ -96,11 +96,7 @@ SUBDIRS = \
 	esf \
 	a \
 	dap \
-	main \
-	lisp.1 \
-	lisp.0 \
-	fonts
-
+	main
 
 EXTRA_DIST = LICENSE
 subdir = src
