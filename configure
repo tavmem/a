@@ -13917,7 +13917,7 @@ _ACEOF
     fi
 
 
-                                                                                                                                                                                                                                                                                                                                                    ac_config_files="$ac_config_files Makefile config/Makefile src/Makefile src/esf/Makefile src/a/Makefile src/app-defaults/Makefile src/dap/Makefile src/main/Makefile src/lisp.0/Makefile src/fonts/Makefile src/fonts/TrueType/Makefile src/fonts/X11/Makefile src/fonts/X11/bdf/Makefile src/fonts/X11/pcf/Makefile src/acore/Makefile src/autils/Makefile src/lisp.1/Makefile"
+                                                                                                                                                                                                                                                                                                                                                    ac_config_files="$ac_config_files Makefile config/Makefile src/Makefile src/esf/Makefile src/a/Makefile src/app-defaults/Makefile src/dap/Makefile src/main/Makefile src/acore/Makefile src/autils/Makefile"
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
 # tests run on this system so they can be shared between configure
@@ -14500,15 +14500,8 @@ do
   "src/app-defaults/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/app-defaults/Makefile" ;;
   "src/dap/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/dap/Makefile" ;;
   "src/main/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/main/Makefile" ;;
-  "src/lisp.0/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/lisp.0/Makefile" ;;
-  "src/fonts/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/fonts/Makefile" ;;
-  "src/fonts/TrueType/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/fonts/TrueType/Makefile" ;;
-  "src/fonts/X11/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/fonts/X11/Makefile" ;;
-  "src/fonts/X11/bdf/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/fonts/X11/bdf/Makefile" ;;
-  "src/fonts/X11/pcf/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/fonts/X11/pcf/Makefile" ;;
   "src/acore/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/acore/Makefile" ;;
   "src/autils/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/autils/Makefile" ;;
-  "src/lisp.1/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/lisp.1/Makefile" ;;
   "depfiles" ) CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
   *) { { echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5
 echo "$as_me: error: invalid argument: $ac_config_target" >&2;}
