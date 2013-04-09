@@ -267,18 +267,6 @@ AC_OUTPUT(\
 	src/app-defaults/Makefile \
 	src/dap/Makefile \
 	src/main/Makefile \
-	src/lisp.0/Makefile \
-	src/fonts/Makefile \
-	src/fonts/TrueType/Makefile \
-	src/fonts/X11/Makefile \
-	src/fonts/X11/bdf/Makefile \
-	src/fonts/X11/pcf/Makefile \
-	src/html/Makefile \
-        src/contrib/Makefile \
         src/acore/Makefile \
-        src/autils/Makefile \
-	src/tutorials/Makefile \
-	src/tutorials/graphs/Makefile \
-	src/tutorials/s.tutorials/Makefile \
-        src/lisp.1/Makefile )
+        src/autils/Makefile )
 
