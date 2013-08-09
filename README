@@ -1,3 +1,13 @@
+This repository contains a stripped down version containing only
+the "A" part of "A+".
+The immediate purpose was to port A to Cygwin, though the resulting
+repo should work anywhere that the full A+ works.
+Porting the "plus" portion of A+ to Cygwin would be a much more 
+difficult task due to heavy dependence on SVR4 libraries, which
+have never been ported to Cygwin.
+
+-------------------------------------------------------------------------
+
 A+ and the A+ Reference Manual are Copyright Morgan Stanley Dean Witter &
 Co.  They are distributed under the GNU General Public License and the GNU
 Free Documentation License and available from http://www.aplusdev.org/.
