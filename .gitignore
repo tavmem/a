@@ -1,0 +1,14 @@
+*.*~
+*~
+*.o
+*.lo
+*.la
+*Makefile
+*.deps
+*.libs
+src/bin/
+src/include/
+src/lib/
+*aplus
+*.log
+*.status
