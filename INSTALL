@@ -6,6 +6,7 @@ Steps for installation:
 1) git clone git@github.com:tavmem/a.git
 2) cd a
 3) CFLAGS=-O2 CXXFLAGS=-O2 ./configure --prefix=/home/USERID/a/src
+   (You need to substitute your own USERID in the above command.)
 4) make install
 
 The resulting interpreter executable is 
