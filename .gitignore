@@ -12,3 +12,5 @@ src/lib/
 *aplus
 *.log
 *.status
+libtool
+src/main/version.h
