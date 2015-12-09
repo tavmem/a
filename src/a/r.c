@@ -131,15 +131,14 @@ Z I rt(void)
 { H("rt ");
   I f,a=0,b,c=0;
   H("rt->");if(!mr())prr(4,0);
-  switch(f= *t++)
-  {
+  f= *t++; H("switch(f:%ld) ",f);
+  switch(f) {
   case MN(5):
   case MN(3):
   CSR(MN(2),*++K=U(f);if(a=rt(),y)prr(3,0);b=mr()?re():(I)aplus_nl;
        if(*t==ELSE){++t;*K=1;c=re();}--K;R me(c?3:2,f,a,b,c));
   CS('[',prr(6,0))CS('(',--t;a=rl(MN(7)))CS('{',--t;a=rl(MN(1)));
-  default:H("f:%ld y:%ld ",f,y); H("rt->"); y=ty(a=f); H("y:%ld ",y); 
-  } 
+  default:H("y:%ld ",y); H("rt->"); y=ty(a=f); H("y:%ld ",y); } 
   if(!y)for(;*t=='[';)a=rl(a);
   H("rt=> ");R a;
 }
@@ -174,10 +173,10 @@ Z I rl(I f)
    return ME(e);
 
 }
-Z I r_rf(void){H("rf\n");H("rf->");I a=rt(),f;
+Z I r_rf(void){H("rf(r.c)\n");H("rf->");I a=rt(),f;
  H("rf->");I r1=mr(); H("rf->");I r2=ty(f= *t); for(;r1&&r2>1;y=1)
   if(++t,a=ty(f)==2?me(1,f,a,0,0):me(2,f,a,rt(),0),y>1)prr(1,0);
- int res=*t=='{'&&(!QN(a)||MN(6)==a)?rl(a):a; H("y:%ld rf=>\n",y); R res; }
+ int res=*t=='{'&&(!QN(a)||MN(6)==a)?rl(a):a; H("rf=>\n"); R res; }
 Z I vs(E e){DO(e->n,if(!vl(e->a[i]))R 0)R 1;}
 I peak(I f){E e=XE(f);R QE(f)&&e->f==MN(9)&&*e->a==MP(74);}
 Z I as(I a){I z;E e;if(!(pvl(a)||QE(a)&&(e=XE(a),peak(e->f)||(e->f==MN(7)?vs(e):
