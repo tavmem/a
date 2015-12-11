@@ -443,15 +443,14 @@ Z I rw()
   
   R u_rs(v,1);
 }
-Z I ra(I k)
-{
+Z I ra(I k){H("ra ");
   r=s;
   t=tb;
   if(k)*t++='{';
   for(;*s;++t,s=cl(s))*t=rw();
   if(k)*t++='}';
   *t=0;
-  R rd(tb);
+  H("ra->");I res=rd(tb); H("ra=> ");R res;
 }
 
 Z I u,c,v;void tfl(void){/*ioctl?*/fflush(stdout);}
@@ -594,8 +593,7 @@ I aplus_err(I i,A a){aplus_errno=q=i;if(!Ef||G&&i)longjmp(J,-3);
 	       Tf=1;stdinFlagSet(Tf);prr(i,a);ui();R 0;}
 void perr(C *s){perror(s),fflush(stdout);}
 
-Z I tok(void)
-{
+Z I tok(void){H("tok ");
   jmp_buf b;
   CX c=Cx;
 /*
@@ -609,17 +607,15 @@ Z I tok(void)
  /**
    z=setjmp(J=b)?0:ra(bal(0));
  */
-   if (setjmp(J=b)) {
-     z = 0;
-   } else {
-     z = ra(bal(0));
+   if (setjmp(J=b)) { z=0; }
+   else{
+     H("tok->");z = ra(bal(0));
    }
  /**/
  
    K=k,Cx=c;
    J=j;
-   R z;
-
+   H("t:%p *t:%ld b:%s z:%ld tok=> ",t,*t,b,z); R z;
 }
 
 I ez(I a)

@@ -317,18 +317,17 @@ Z I padata(A a,I f,I x)
     }
     if(r>1)for(mv(d,a->d,r),n=d[k=r-1];--k;)d[k]*=d[k+1];
     else n=r?an:1;
-    for(;;)
+    H("\n"); for(;;)
     {
       if(j)DO(n,H("< ");paf((A)(*p++),f+1,x);if(i<n-1||an>n)in(f))
       else DO((n<=an)?n:an,if(q==1){if(dca)dc(a);R 0;}PC(*s++));
-      if(0>=(an-=n)){if(dca)dc(a);R 1;}
+      if(0>=(an-=n)){if(dca)dc(a);H("\npaf=>");R 1;}
       for(k=r;--k&&!(an%d[k]);)in(f);
     }
   }
 }
 
-I paf(A a,I f,I x)
-{
+I paf(A a,I f,I x) { H("\npaf ");
   I t;
   C *ix=x?"":" ";
   BRK;

@@ -85,7 +85,9 @@ Z void prr(I i,I j)
   tc(r);
 }
 
-Z E mm(I n){if(*++r=(I)ma(n))R(E)*r;--r,prr(0,0);R 0;}
+Z E mm(I n){H("mm ");
+ H("mm->");if(*++r=(I)ma(n)){H("mm=> ");R(E)*r;}
+ --r,prr(0,0);H("mm=> ");R 0;}
 
 #define ELSE MN(1) 
 I ty(I a){H("ty "); I t;
@@ -112,7 +114,7 @@ Z I me(I n,I f,I a,I b,I c)
     (a=ee(e),*r=a,ef(ME(e)),a):ME(e);
 */
    H("me ");
-   E e=mm(n+2);
+   H("me->");E e=mm(n+2);
    e->n=n,e->f=f,*e->a=a;
  
    if(n>1)e->a[1]=b;
@@ -121,9 +123,9 @@ Z I me(I n,I f,I a,I b,I c)
      a=ee(e);
      *r=a;
      ef(ME(e));
-     H("me=>");return a;
+     H("me=>");R a;
    } else {
-     H("me=>");return ME(e);
+     H("me=>");R ME(e);
    }
 }
 Z I mr(void){H("mr ");I r=*t&&*t!=';'&&*t!=')'&&*t!=']'&&*t!='}'&&*t!=ELSE;H("mr=> ");R r;}
@@ -209,7 +211,7 @@ Z I rz(I *b0)
   I i;
   for(r=t=b0;*r;++r)
     if(QS(*r)&&!ispu(*r)) *r=(i=lk(*r,(A)(Qs?Qs:*X))) ? i : MV(vi(XS(*r),Cx));
-  H("rz->"); I res=re(); H("rz=>"); R res;
+  H("rz->"); I res=re(); H("rz=> "); R res;
 }
 
 void f0(C *s){A aobj=(A)sv(Cx,si(s))->e;if(aobj)H("%s\n",(C*)aobj->p[aobj->n+1]);}
@@ -364,11 +366,10 @@ Z I str(I *t,I r,I *b,I n,I *p)
   R n;
 }
 
-I rd(I *b)
-{
+I rd(I *b){ H("rd "); I res;
   Qs=0;
   for(t=b;*t&&*t!=':';++t);
-  if(!*t)R rz(b);
+  if(!*t){H("rd->");res=rz(b); H("rd=> ");R res;}
   for(r=t;*++r;);
   {
     A f,z;
