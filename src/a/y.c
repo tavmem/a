@@ -306,8 +306,7 @@ C *cmdsList[]={
   0};
 Z C *ts[]={"0 off","1 on","2 trace"};
 #define CF(i,f) CS(i,if(*s){f=*s=='2'?2:*s=='1';break;}H("%s\n",ts[f]))
-void sys(C *s)
-{
+void sys(C *s){
   C *v;
   I f=0;
   C c,d,*u,*w,*x;
@@ -378,8 +377,7 @@ void sys(C *s)
     CS(41,(*u=c,*w=d,syst(v+1)));   /* $+su (Add 1 to skip over the "+") */
   default:*u=c,*w=d;syst(v);
   }
-  if(v) free(v);
-}
+  if(v) free(v); H("sys=> ");}
 
 Z H1(charToInt){
   A z;

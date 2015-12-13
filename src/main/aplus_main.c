@@ -80,16 +80,14 @@ static I _atmp_mode = WS_ATMP_SHARED;
 
 #ifdef _INTERPRETER_ONLY
 #include <sys/select.h>
-static void getm()
-{
+
+static void getm(){
   fd_set read_fd;
   FD_ZERO(&read_fd);
   FD_SET(fileno(stdin),&read_fd);
-  if(-1==select(fileno(stdin)+1, &read_fd,0,0,0) && Tf)
-    NL, sbi(), pr();
-  else
-    if(FD_ISSET(fileno(stdin), &read_fd))  tf();
-}
+  if(-1==select(fileno(stdin)+1, &read_fd,0,0,0) && Tf) NL, sbi(), pr();
+  else if(FD_ISSET(fileno(stdin), &read_fd))  tf(); }
+
 #endif
 
 void aplus_main(long argc, char** argv)
@@ -133,8 +131,8 @@ void aplus_main(long argc, char** argv)
 #else
         if (i < argc && argv[i] && *argv[i])
           loadafile(argv[i],0);
-	if (Tf) pr(); 
-	while(1) getm();
+	if (Tf) pr();
+	printf("aplus_main->getm ");while(1) getm();
 #endif
 /**********************************************************************
     These functions are moved to AplusLoop 

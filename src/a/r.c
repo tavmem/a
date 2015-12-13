@@ -58,7 +58,7 @@ for(v=*bp;v;v=v->v)if(s==v->s)R v;R 0;}
 CX cx(const C *s){R *s!='.'?cxi(si(s)):Rx;}
 
 I gz(void){R(I)aplus_nl;}
-I qz(A aobj){R ((aobj==aplus_nl)||(QA(aobj)&&aobj->t==Et&&!aobj->n&&aobj->r>0));}
+I qz(A aobj){H("qz ");R ((aobj==aplus_nl)||(QA(aobj)&&aobj->t==Et&&!aobj->n&&aobj->r>0));H("qz=> ");}
 
 Z I cvl(I a0){R vl(a0)||QE(a0)&&XE(a0)->f==MP(74);}
 Z I pvl(I a0){E e;R cvl(a0)||QE(a0)&&(e=XE(a0),e->n==2&&e->f==MP(36)&&cvl(e->a[1]));}
@@ -172,27 +172,23 @@ Z I rl(I f)
    e->f = f;
    mv(e->a,b,e->n=n);
    rlbf;
-   return ME(e);
+   return ME(e); }
 
-}
 Z I r_rf(void){H("rf(r.c)\n");H("rf->");I a=rt(),f;
  H("rf->");I r1=mr(); H("rf->");I r2=ty(f= *t); for(;r1&&r2>1;y=1)
   if(++t,a=ty(f)==2?me(1,f,a,0,0):me(2,f,a,rt(),0),y>1)prr(1,0);
- int res=*t=='{'&&(!QN(a)||MN(6)==a)?rl(a):a; H("rf=>\n"); R res; }
+ int res=*t=='{'&&(!QN(a)||MN(6)==a)?rl(a):a; H("rf=> "); R res; }
+
 Z I vs(E e){DO(e->n,if(!vl(e->a[i]))R 0)R 1;}
 I peak(I f){E e=XE(f);R QE(f)&&e->f==MN(9)&&*e->a==MP(74);}
 Z I as(I a){I z;E e;if(!(pvl(a)||QE(a)&&(e=XE(a),peak(e->f)||(e->f==MN(7)?vs(e):
   e->f!=MP(36)&&e->f!=MP(74)&&rvl(e->a[e->f==MX(0)?0:e->n-1])))))prr(5,0);
  ++t,z=me(2,MN(0),a,re(),0);if(QV(a))XV(a)->t=y;R z;}
-/*
-Z I re(void){I f,a,w;a=r_rf();if(!mr())R a;if(*t==MN(0))R as(a);if(y>1)prr(1,0);
-       if(f=!y){f=r_rf();if(y!=1)prr(2,a);}w=re();if(y)prr(3,0);
-       R f?me(2,f,a,w,0):me(1,a,w,0,0);}
-*/
- Z I re(void){H("\n\nre ");
+
+ Z I re(void){H("re ");
    I f,a,w; I bertmp;
    H("reFa->"); a=r_rf();
-   H("re->"); if(!mr()) {H("\nreZa=> ");R a;}
+   H("re->"); if(!mr()) {H("reZa=> ");R a;}
    if(*t==MN(0)) {H("reZb=> "); R as(a);}
    if(y>1){H("re1->"); prr(1,0);}
    H("f:%ld y:%ld\n",f,y);
@@ -200,8 +196,7 @@ Z I re(void){I f,a,w;a=r_rf();if(!mr())R a;if(*t==MN(0))R as(a);if(y>1)prr(1,0);
    H("reE->");w=re();
    if(y){H("re3->"); prr(3,0);}
    if(f){H("re->"); bertmp=me(2,f,a,w,0); H("\nreZc=> "); R bertmp;}
-   else{H("\nreZd=> ");R me(1,a,w,0,0);}
- }
+   else{H("\nreZd=> "); R me(1,a,w,0,0);} }
 
 Z I lk(I s,A f){I i;if(!f)R 0;if(f->r>1)DO(f->r,if(f->d[i]==s)R ML(i))
  for(i=f->n;--i;)if(f->p[i]==s)R ML(-i);R 0;

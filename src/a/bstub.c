@@ -135,14 +135,14 @@ char * _mab_cover(unsigned long w)
 static char *(*pf_mab)(unsigned long)=_mab;
 
 char * mab(unsigned long w) 
-{
+{ printf("mab ");
   return pf_mab(w);
-}
+  printf("mab=> "); }
 
-long *ma(unsigned long w)
-/* w - number of words required */
-{
-  return (long *)(mab(w*sizeof(long)));
+long *ma(unsigned long w)  /* w - number of words required */
+{ printf("ma ");
+  C *res=(long *)(mab(w*sizeof(long)));
+  printf("ma=> ");return res;
 }
 
 static void _mf(long *p)

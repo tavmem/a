@@ -291,7 +291,7 @@ extern I dbg_txeq;
 C *sy(C *s){for(;isan(*++s););R s;}
 C *dlb(C *s){for(;issp(*s);++s);R s;}
 C *ssym(C *s){for(;isan(*++s)||*s=='.';);R s;}
-C *cl(C *s){for(;s=dlb(s),CCtest(s);)for(;*++s&&*s!='\n';);R s;}
+C *cl(C *s){H("cl ");for(;s=dlb(s),CCtest(s);)for(;*++s&&*s!='\n';);H("cl=> ");R s;}
 C *bl(C *s){for(;*s&&!issp(*s);++s);R s;}
 void tc(I *t){for(;t>tb;)if(!ispu(*--t))dc((A)*t);longjmp(J,-2);}
 Z C *ts[]={"wsfull","stack","undefined","MAX args: 9","( nesting too deep"};
@@ -299,36 +299,27 @@ Z C *ts[]={"wsfull","stack","undefined","MAX args: 9","( nesting too deep"};
 /* trr modified to replace c at *e, to restore string element which has
    been temporarily repalced by \0, after error message is displayed
 */
-Z void trr(I q,C *s,C *e,C c)
-{
+Z void trr(I q,C *s,C *e,C c){H("trr ");
   if(!G)H("%s[token]: %s %s\n",CC,q==2?s:"",ts[q]);
   if(e)*e=c;
-  tc(t);
-}
+  tc(t); H("tr=> ");}
+
 /* changing to char cast */
 Z void brr(I c){if(!G)H("TOKEN: open %c\n",(char)c);tc(tb);}
-Z I u_rs(C *v,I i)
-{
-  I t=0;
-  C c=*s;
-  *s=0;
-  if(i&&(*v=='\312'||(t=aplus_pi(v))))
-  {
-    if(c=='/'||c=='\\'||c=='\256'||c=='.'&&!isan(s[1]))
-    {
+
+Z I u_rs(C *v,I i){H("rs ");
+  I t=0; C c=*s; *s=0;
+  if(i&&(*v=='\312'||(t=aplus_pi(v)))) {
+    if(c=='/'||c=='\\'||c=='\256'||c=='.'&&!isan(s[1])) {
       *s++=c;
       if(c=='.'&&*s&&!ispu(*s)&&!issp(*s))++s;
-      c=*s,*s=0,t=aplus_pi(v);
-    }
-    if(!t)trr(2,v,s,c);
-  }
-  else
-  {
+      c=*s,*s=0,t=aplus_pi(v); }
+    if(!t){H("rs->");trr(2,v,s,c);} }
+  else {
     if(i==1)trr(2,v,s,c);
-    t=MS(si(v)); 
-  }
-  R *s=c,t;
-}
+    t=MS(si(v)); }
+  H("rs=> ");R *s=c,t; }
+
 Z I rs_uni(C *v)
 {
   C c;I z,idx;
@@ -338,7 +329,7 @@ Z I rs_uni(C *v)
   v[idx]=c;
   if(z) {s+=idx;R z;} else R 0;
 }
-Z I rq(I c){while(*++s&&((c=='"'?*s=='\\':*s==c&&s[1]==c)?(I)++s:*s!=c));R *s;}
+Z I rq(I c){H("rq ");while(*++s&&((c=='"'?*s=='\\':*s==c&&s[1]==c)?(I)++s:*s!=c));H("rq=> ");R *s;}
 Z I acp(C *d,const C *s){C *t=d;for(;*d=*s;++d,++s)if(*s=='\'')++s;R d-t;}
 Z I ccp(C *d,const C *s)
 {
@@ -370,84 +361,63 @@ A gsv(I i,const C *s)
 A gst(I x,C *s){A r=(A)gsv(x,s);r->r=1;return r;}
 /* gst() is a cover for gsv() which always returns a vector. */
 Z I gvs(I t,I n,I *s){R(I)gc(t,n!=1,n,&n,s);}
-A gvi(I t, I n,...)
- {
-  I x;
-  A z;
-  va_list ap;
-  P zp;
 
+A gvi(I t, I n,...) {
+  I x; A z; va_list ap; P zp;
   va_start(ap, n);
   z=gv(t,n);zp.i=z->p;
-  switch(t)
-   {
+  switch(t) {
     CS(It,DO(n,*zp.i++=va_arg(ap,I)))
     CS(Ft,DO(n,*zp.f++=va_arg(ap,F)))
     CS(Ct,DO(n,*zp.c++=(C)va_arg(ap,I)))
     CS(Et,DO(n,*zp.i++=(x=va_arg(ap,I))?x:(I)aplus_nl))
-    default:DO(n,*zp.i++=va_arg(ap,I))break;
-   }
+    default:DO(n,*zp.i++=va_arg(ap,I))break; }
   va_end(ap);
-  R z;
- }
-Z I rw()
-{
-  I n=0,y;
-  F d[9999];
-  C c=*s,*v=s;
-  extern I *XY;
+  R z; }
+
+Z I rw(){H("rw ");
+  I n=0,y; F d[9999]; C c=*s,*v=s; extern I *XY;
   if(ispu(c)&&(c!=':'||s[1]!='='))R *s++;
 
   /* look for a si argument */
-  if(c==SI_CHAR)
-  {
+  if(c==SI_CHAR) {
     if(!isdi(*++s))R ML(0);
     n=*s++-'0';
-    if(Y+n>=XY)trr(1,"",0,0);
-    R ML(n-=X-Y);
-  }
+    if(Y+n>=XY){H("rw->");trr(1,"",0,0);}
+    R ML(n-=X-Y); }
 
   /* look for a quoted string */
-  if((n=c=='"')||c=='\'')R ++v,rq(c),*s=0,n=(I)gsv(n+1,v),*s++=c,n;
+  if((n=c=='"')||c=='\'')R ++v,H("rw->"),rq(c),*s=0,n=(I)gsv(n+1,v),*s++=c,n;
 
   /* look for a symbol constant */
-  for(n=0;*s=='`';s=cl(s)){s=ssym(v=s);t[n++]=u_rs(v+1,0);}
+  for(n=0;*s=='`';H("rw->"),s=cl(s)){s=ssym(v=s);t[n++]=u_rs(v+1,0);}
   if(n)R gvs(Et,n,t);
 
-  
   /* look for a numeric constant */
   for(;readDoubleFromString(&s,d+n);s=dlb(s))if(++n==9999)trr(1,"",0,0);
   /* doubles now loaded in d, n is howmany, s is at next token */
-  if(n)
-  {
+  if(n) {
     C c=*s;*s=0;y=(I)strpbrk(v,".Ee"),*s=c;
     if(!y)DO(n,if(y=d[i]!=(t[i]=d[i])){q=0;break;});
-    R gvs(y?Ft:It,n,y?(I*)d:t);
-  }
+    R gvs(y?Ft:It,n,y?(I*)d:t); }
 
   /* look for a uni-mode compound (X.#) primitive */
   if(APMODE_UNI==APL&&isal(*v)&&'.'==v[1]&&(n=rs_uni(v)))R n;
 
   /* look for a name */
-  if(s=cl(s),n=isal(*s)){s=sy(v=s);n=u_rs(v,2);}
-  if(*s=='.'&&isal(s[1])&&(QS(n)||!n))
-  {
+  if(H("rw->"),s=cl(s),n=isal(*s)){s=sy(v=s);n=u_rs(v,2);}
+  if(*s=='.'&&isal(s[1])&&(QS(n)||!n)) {
     s=sy(v=s+1);
     y=u_rs(v,2);
     if (QS(y)) R MV(vi(XS(y),n?cxi(XS(n)):Rx));
-    else trr(2,".",0,0);  /* trr does longjmp */
-  }
+    else trr(2,".",0,0);  /* trr does longjmp */  }
   if(n)R n;
-
   if(*++s=='='||*s==':')++s;
-  
-  R u_rs(v,1);
-}
+  H("rw->");I res=u_rs(v,1); H("rw=> ");R res; }
+
 Z I ra(I k){H("ra ");
-  r=s;
-  t=tb;
-  if(k)*t++='{';
-  for(;*s;++t,s=cl(s))*t=rw();
+  r=s; t=tb; if(k)*t++='{';
+  for(;*s;++t,H("ra->"),s=cl(s)){H("ra->");*t=rw();}
   if(k)*t++='}';
   *t=0;
   H("ra->");I res=rd(tb); H("ra=> ");R res;
@@ -455,16 +425,26 @@ Z I ra(I k){H("ra ");
 
 Z I u,c,v;void tfl(void){/*ioctl?*/fflush(stdout);}
 void pr(void){q=0;if(!Reset){DO(u+v,H("*"))H("     "),tfl();}}
-Z I chk(void){if(c)if(--s,!rq(c))R c;else --v,++s;
- for(;s=cl(s),c=*s;++s){if(c=='"'||c=='\'')if(!rq(c))R ++v;
-  if(c=='{'||c=='(')++v; else if(c=='}'||c==')')--v;}
- R v<0?(v=0):v>0||s[-2]==':';}
-void ff(A a){if(Tf&&!qz(a))paf(a,0,0),NL,tfl();}
-Z I bal(I f)
-{
+
+Z I chk(void){H("chk ");
+ if(c){ H("chk->");if(--s,!rq(c)){H("f1=> ");R c;} }
+ else --v,++s;
+ for(;H("chk->"),s=cl(s),c=*s;++s){
+  if(c=='"'||c=='\''){H("f1->");if(!rq(c)){H("f1=> ");R ++v;}}
+  if(c=='{'||c=='(')++v;
+  else if(c=='}'||c==')')--v;}
+ if(v<0){H("chk=> ");R v=0;}
+ else {H("chk=> ");R v>0||s[-2]==":";}
+}
+
+void ff(A a){H("ff ");
+ H("ff->");if(Tf&&!qz(a)){ H("ff->");paf(a,0,0); NL; H("paf=> "); tfl();}
+ H("ff=> "); }
+
+Z I bal(I f){H("bal ");
   C c,b[999],*v=s;
   I i=0,j,k=0;
-  for(;s=cl(s),c=*s;++s)
+  for(;H("bal->"),s=cl(s),c=*s;++s)
     switch(j=0,c)  /* lots of intentional fall-thru */
     {
       case'"':
@@ -481,91 +461,71 @@ Z I bal(I f)
     } 
   if(i)brr(b[i-1]);
   if(f)R -1;
-  R s=v,k;
-}
+  H("bal=> ");R s=v,k; }
+
 C *nx(C* t){R s=t,bal(1),s;}
 
-Z void de(void)
-{
-  I a=exm(s,APL);
+Z void de(void){H("de ");
+  H("de->");I a=exm(s,APL);
   if(q==-1&&J)u--,longjmp(J,-1);
   q=0;
-  if(a)ff((A)a),dc((A)a);
-  k_tm(0);
+  if(a){H("de->");ff((A)a); H("de->");dc((A)a);}
+  H("de->");k_tm(0);
+  H("de=> ");
 }
 
 Z I EoF=0;
 Z I AbortLoad=0;
-Z C sb[99999],*b=sb;void sbi(void){b=sb,*b=c=v=0;}
+Z C sb[99999],*b=sb;void sbi(void){H("sbi ");b=sb,*b=c=v=0;H("sbi=>");}
 C *sj(C *s,I j){R strncpy(sb,s,j),sb[j]=0,sb;}
-Z I u_f1(FILE *f)
-{
+
+Z I u_f1(FILE *f){H("f1 ");
   I n=sb+sizeof(sb)-b;
   if(Reset) --Reset, --u, longjmp(J, -3); 
-  if(EoF=!fgets(b,n,f?f:stdin)){if(f)R 0;exit(1);}
-  if(v&&!b[2]&&(*b=='\375'||*b=='$'))R sbi(),0;
-  if (n==strlen(b)+1)
-  {
-    H("buffer full\n");
-    sbi();
-    R -1;
-  }
+  if(EoF=!fgets(b,n,f?f:stdin)){if(f){H("f1=> ");R 0;} exit(1);}
+  if(v&&!b[2]&&(*b=='\375'||*b=='$')){H("f1->");sbi(); H("f1=> ");R 0;}
+  if(n==strlen(b)+1){ H("buffer full\n"); sbi(); H("f1=> "); R -1; }
   s=b;
-  if (chk())
-  {
-    b = s;
-    R 1;
-  }
-  R 0;
-}
+  H("f1->");if(chk()){ b=s; H("f1=> ");R 1; }
+  H("f1=> ");R 0; }
 
-Z I go(void)
-{
+Z I go(void){H("go ");
   I r,rf=0;
   for(;issp(*--s););
   s[1]=0;
-  s=cl(b=sb);
-  if(!*s)R 0;
-  if((r=*s=='\373'||*s==':')||(!s[1]&&(*s=='\375'||*s=='$'))||
-     (*s=='$' && (rf=!strncmp(s+1,"reset",5))))
-  {
-    if(!J)R u;
-    if(r)
-    {
-      if(!s[1])R 1;
-      r=exm(s+1,APL);
-      if(!r)R q=0;
-    }
-    if(rf) 
-    {
-      if(s[6]) Reset=MAX(0,MIN(u,atol(&s[6])));
+  H("go->");s=cl(b=sb);
+  if(!*s){H("go=> ");R 0;}
+  if((r=*s=='\373'||*s==':')||(!s[1]&&(*s=='\375'||*s=='$'))||(*s=='$' && (rf=!strncmp(s+1,"reset",5)))) {
+    if(!J){H("go=> ");R u;}
+    if(r){ if(!s[1]){H("go=> ");R 1;} H("go->");r=exm(s+1,APL); if(!r){H("go=>");R q=0;} }
+    H("go->");if(rf){
+      if(s[6])Reset=MAX(0,MIN(u,atol(&s[6])));
       else Reset=u;
-      R 0;
-    }  
-    else --u,longjmp(J,r?r:-3);
-  } 
-  R de(),0;
+      H("go=> ");R 0; }  
+    else --u,longjmp(J,r?r:-3); } 
+  H("go->");de(); H("go=> ");R 0;
 }
 
 Z C *scp(C *s){R (C *)strcpy(mab(1+strlen(s)),s);}
-void rf(C *s,FILE *f)
-{
-  if(s)*++K=MV(s=scp(s)),*++K=-1;
+
+void rf(C *s,FILE *f){H("rf ");
+  if(s)H("rf->"),*++K=MV(s=scp(s)),*++K=-1;
   AbortLoad=0;
-  for(;;)
-  {
+  for(;;){
     if(!u_f1(f))if(EoF||go()||AbortLoad)break;
-    if(s)--*K;
-  }
+    if(s)--*K; }
   AbortLoad=0;
-	/* this was a char printf changed to cast */
-  if(c||v)H("%s OPEN %c\n",b,(char)(c?c:'{')),c=v=0;if(s)K-=2,mf((I *)s);
-}
+  if(c||v)H("%s OPEN %c\n",b,(char)(c?c:'{')),c=v=0;
+  if(s)K-=2,H("rf->"),mf((I *)s); H("rf=> "); }
 
 I getAbortLoad(){R AbortLoad;}
 void setAbortLoad(I val){AbortLoad=val;}
 
-I tf(void){I r=u_f1(0)?0:go();if(!r)pr();R r;}
+I tf(void){H("getm->tf "); I r;
+ H("tf->");if(u_f1(0))r=0;
+ else {H("tf->");r=go();} 
+ H("tf=>getm\n"); if(!r)pr(); R r; }
+
 I ui(void)
 {
   CX c=Cx;
@@ -594,29 +554,11 @@ I aplus_err(I i,A a){aplus_errno=q=i;if(!Ef||G&&i)longjmp(J,-3);
 void perr(C *s){perror(s),fflush(stdout);}
 
 Z I tok(void){H("tok ");
-  jmp_buf b;
-  CX c=Cx;
-/*
-  jmptype j=J;
-  I *k=K,z=setjmp(J=b)?0:ra(bal(0));
-  R K=k,Cx=c,J=j,z;
-*/
-   jmptype j=J;
-   I *k=K,z;
- 
- /**
-   z=setjmp(J=b)?0:ra(bal(0));
- */
-   if (setjmp(J=b)) { z=0; }
-   else{
-     H("tok->");z = ra(bal(0));
-   }
- /**/
- 
-   K=k,Cx=c;
-   J=j;
-   H("t:%p *t:%ld b:%s z:%ld tok=> ",t,*t,b,z); R z;
-}
+  jmp_buf b; CX c=Cx; jmptype j=J; I *k=K,z;
+  if(setjmp(J=b))z=0;
+  else{ H("tok->");I tmp=bal(0); H("tok->");z=ra(tmp); } 
+  K=k,Cx=c; J=j;
+  H("t:%p *t:%ld b:%s z:%ld tok=> ",t,*t,b,z); R z; }
 
 I ez(I a)
 {
@@ -653,45 +595,19 @@ I ez(I a)
   R a=ev(a),J=j,a;
 }
 
-I exm(C* expstr,I mode)
-{
-/*
- I e,z;s=cl(expstr);
- if(*s=='$')R sys(s+1),(I)aplus_nl;if(!*s)R(I)aplus_nl;Q(Y-K<30,3)
- z=APL,APL=mode,e=tok(),APL=z;
- Q(!e,15)*++K=MS(expstr=scp(expstr)),z=ez(e),mf((I*)expstr),K--;
- if(!z){if(!q)q=9;ef(e);R 0;}
-*/
- I e,z;
-
-
- s=cl(expstr);
-
- if(*s=='$')
-   R sys(s+1),(I)aplus_nl;
- if(!*s)
-   R(I)aplus_nl;
+I exm(C* expstr,I mode){H("exm ");
+ I e,z; 
+ H("exm->");s=cl(expstr);
+ if(*s=='$') R H("exm->"),sys(s+1),(I)aplus_nl;
+ if(!*s) R(I)aplus_nl;
  Q(Y-K<30,3)
-
- z=APL;
- APL=mode;
- e=tok();
- APL=z;
-
+ z=APL; APL=mode; H("exm->");e=tok(); APL=z;
  Q(!e,15)
  *++K=MS(expstr=scp(expstr));
- z=ez(e);
- mf((I*)expstr);
- K--;
- if(!z){
-  if(!q)
-    q=9;
-  ef(e);
-  R 0;
- }
-
- R QE(e)&&XE(e)->f==MN(0)?(ef(e),dc((A)z),(I)aplus_nl):(ef(e),z);
-}
+ z=ez(e); mf((I*)expstr); K--;
+ if(!z){ if(!q)q=9; ef(e); R 0; }
+ int res=QE(e)&&XE(e)->f==MN(0)?(H("exm->"),ef(e),H("exm->"),dc((A)z),(I)aplus_nl):(H("exm->"),ef(e),z);
+ H("exm=> ");R res; }
 
 extern I Gf,Xf,doErrorStack;
 I pev(I a)

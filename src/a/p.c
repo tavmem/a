@@ -321,7 +321,7 @@ Z I padata(A a,I f,I x)
     {
       if(j)DO(n,H("< ");paf((A)(*p++),f+1,x);if(i<n-1||an>n)in(f))
       else DO((n<=an)?n:an,if(q==1){if(dca)dc(a);R 0;}PC(*s++));
-      if(0>=(an-=n)){if(dca)dc(a);H("\npaf=>");R 1;}
+      if(0>=(an-=n)){if(dca)dc(a);H("\npadata=>");R 1;}
       for(k=r;--k&&!(an%d[k]);)in(f);
     }
   }
@@ -342,8 +342,7 @@ I paf(A a,I f,I x) { H("\npaf ");
     CS(5,t=U(a);(a=(A)*X)&&t>-a->n&&t<a->r?paf((A)(t<0?a->p[-t]:a->d[t]),f+1,x):H(" &"));
     CS(0,padata(a,f,x));
   }
-  R -1;
-}
+  R -1; }
 
 void pa(V v){paf((A)v,1,0);}
 

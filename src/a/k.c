@@ -180,7 +180,7 @@ I ic(A aobj)
 	}
 
 void dc(A aobj)
-{
+{H("dc ");
   if(aobj&&aplus_nl!=aobj&&QA(aobj))
   {
     if((aplusPageMask&(I)aobj)&&aobj->c)
@@ -196,6 +196,7 @@ void dc(A aobj)
     }
     else dm(aobj);
   }
+  H("dc=> ");
 }
 
 void dec(A aobj)
@@ -208,17 +209,18 @@ void dec(A aobj)
   mf((I *)aobj);
 }
 
-void ef(I arg)
-{
+void ef(I arg){
   E epr;
   if(!QE(arg)){dc((A)arg);R;}
   epr=XE(arg);
   DO(epr->n,ef(epr->a[i]));
   ef(epr->f);
-  mf((I *)epr);
-}
+  mf((I *)epr); }
 
-I *k_tm(I n){Z I *ta=0;if(ta)mf(ta);R ta=n?ma(n):0;}
+I *k_tm(I n){H("tm(k.c) "); Z I *ta=0;
+ if(ta){H("mf ");mf(ta);}
+ if(ta=n){H("tm->");I *res=ma(n); H("tm=> ");R res;}
+ else{H("tm=> ");R 0;} }
 
 void mv(I *dest,I *src,I n){DO(n,*dest++=*src++)}
 
