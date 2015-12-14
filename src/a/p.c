@@ -327,7 +327,7 @@ Z I padata(A a,I f,I x)
   }
 }
 
-I paf(A a,I f,I x) { H("\npaf ");
+I paf(A a,I f,I x) { H("\npaf (I)a:%ld f:%ld x:%ld q:%ld (switch(aplusMask&(I)a):%ld\n",(I)a,f,x,q,(aplusMask&(I)a));
   I t;
   C *ix=x?"":" ";
   BRK;

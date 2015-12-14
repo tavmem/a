@@ -209,13 +209,13 @@ void dec(A aobj)
   mf((I *)aobj);
 }
 
-void ef(I arg){
+void ef(I arg){H("ef ");
   E epr;
-  if(!QE(arg)){dc((A)arg);R;}
+  if(!QE(arg)){H("ef->");dc((A)arg);H("ef=> ");R;}
   epr=XE(arg);
   DO(epr->n,ef(epr->a[i]));
   ef(epr->f);
-  mf((I *)epr); }
+  mf((I *)epr); H("ef=> ");}
 
 I *k_tm(I n){H("tm(k.c) "); Z I *ta=0;
  if(ta){H("mf ");mf(ta);}
@@ -319,30 +319,21 @@ A ge(I x){A z=gs(Et);*z->p=x;R z;}
 #if 0
 I ev(I z){if(q)aplus_err(q,(A)(QE(z)?XE(z)->f:z));EV(z) R z;}
 #else
- I ev(I z){
-   if(q)
-     aplus_err(q,(A)(QE(z)?XE(z)->f:z));
- 
-   {
-    I t;
-    E etmp;
-    I itmp;
- 
- 
-    switch(aplusMask&z){
-      CS(0,ic((A)z))
-      case 3:
-       itmp = (I)(z)&~aplusMask;
-       etmp = (E)itmp;
-       z=ee(etmp);
-       break;
-      CS(1,ic((A)(z=(I)gt(XV(z)))))
-      CS(5,for(;!(t=X[U(z)]);)aplus_err(4,(A)z);ic((A)(z=t)))
-    }
- }
- 
-   R z;
- }
+ I ev(I z){H("ev ");
+   if(q)aplus_err(q,(A)(QE(z)?XE(z)->f:z));
+   { I t;
+     E etmp;
+     I itmp;
+     switch(aplusMask&z){
+       CS(0,ic((A)z))
+       case 3:
+        itmp = (I)(z)&~aplusMask;
+        etmp = (E)itmp;
+        z=ee(etmp);
+        break;
+       CS(1,ic((A)(z=(I)gt(XV(z)))))
+       CS(5,for(;!(t=X[U(z)]);)aplus_err(4,(A)z);ic((A)(z=t))) } }
+   H("z:%lld ev=> ",z);R z; }
 #endif
 
 extern I PX(I,I),(*PN[])(E),(*P1[])(I,I),(*P2[])(I,I,I);

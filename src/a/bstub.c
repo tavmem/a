@@ -135,9 +135,8 @@ char * _mab_cover(unsigned long w)
 static char *(*pf_mab)(unsigned long)=_mab;
 
 char * mab(unsigned long w) 
-{ printf("mab ");
-  return pf_mab(w);
-  printf("mab=> "); }
+{ printf("mab mab=> ");
+  return pf_mab(w); }
 
 long *ma(unsigned long w)  /* w - number of words required */
 { printf("ma ");
@@ -199,7 +198,7 @@ static void _mf_cover(long *p)
 void (*pf_mf)(long *)=_mf;
 
 void mf(long *p)
-{
+{ printf("mf mf=> ");
   pf_mf(p);
 }
 

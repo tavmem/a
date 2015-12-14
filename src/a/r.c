@@ -58,7 +58,8 @@ for(v=*bp;v;v=v->v)if(s==v->s)R v;R 0;}
 CX cx(const C *s){R *s!='.'?cxi(si(s)):Rx;}
 
 I gz(void){R(I)aplus_nl;}
-I qz(A aobj){H("qz ");R ((aobj==aplus_nl)||(QA(aobj)&&aobj->t==Et&&!aobj->n&&aobj->r>0));H("qz=> ");}
+I qz(A aobj){H("qz ");I res=((aobj==aplus_nl)||(QA(aobj)&&aobj->t==Et&&!aobj->n&&aobj->r>0));
+  H("res:%d qz=> ",res);R res;}
 
 Z I cvl(I a0){R vl(a0)||QE(a0)&&XE(a0)->f==MP(74);}
 Z I pvl(I a0){E e;R cvl(a0)||QE(a0)&&(e=XE(a0),e->n==2&&e->f==MP(36)&&cvl(e->a[1]));}

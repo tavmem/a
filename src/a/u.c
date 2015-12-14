@@ -467,12 +467,12 @@ C *nx(C* t){R s=t,bal(1),s;}
 
 Z void de(void){H("de ");
   H("de->");I a=exm(s,APL);
+  H("\na:%ld q:%ld J:%ld (q==-1&&J):%d\n",a,q,J,(1==-1&&J));
   if(q==-1&&J)u--,longjmp(J,-1);
   q=0;
   if(a){H("de->");ff((A)a); H("de->");dc((A)a);}
   H("de->");k_tm(0);
-  H("de=> ");
-}
+  H("de=> "); }
 
 Z I EoF=0;
 Z I AbortLoad=0;
@@ -506,7 +506,7 @@ Z I go(void){H("go ");
   H("go->");de(); H("go=> ");R 0;
 }
 
-Z C *scp(C *s){R (C *)strcpy(mab(1+strlen(s)),s);}
+Z C *scp(C *s){H("scp "); H("scp->");C *res=(C *)strcpy(mab(1+strlen(s)),s); H("res:%s scp=> ",res);R res;}
 
 void rf(C *s,FILE *f){H("rf ");
   if(s)H("rf->"),*++K=MV(s=scp(s)),*++K=-1;
@@ -560,40 +560,18 @@ Z I tok(void){H("tok ");
   K=k,Cx=c; J=j;
   H("t:%p *t:%ld b:%s z:%ld tok=> ",t,*t,b,z); R z; }
 
-I ez(I a)
-{
-/*
-  jmp_buf b;jmptype j=J;I *k=K,*x=X,*y=Y,i;CX c=Cx;
-*/
-   jmp_buf b;
-   jmptype j=J;
-   I *k=K,*x=X,*y=Y,i;
-   CX c=Cx;
-
+I ez(I a){H("ez "); jmp_buf b; jmptype j=J; I *k=K,*x=X,*y=Y,i; CX c=Cx;
   q=0;
-  if(i=setjmp(J=b))
-  {
+  if(i=setjmp(J=b)) {
     Cx=c;
-    if(q && doErrorStack) 
-      snapshotKstack();
+    if(q && doErrorStack)snapshotKstack();
     for(J=j,K=k,X=x;Y<y;)dc((A)(*Y++));
-/*
-    R q?0:i!=-3?i:0;}
-*/
-    if (q) {
-      R 0;
-    } else {
-      if (i != -3) {
-	i = (I)Glbrtn;
-        R i;
-      } else {
-        R 0;
-      }
-    }
-    }
-
-  R a=ev(a),J=j,a;
-}
+    if(q){H("ez=> ");R 0;}
+    else{
+      if(i != -3){i=(I)Glbrtn; H("ex=> ");R i;}
+      else{H("ex=> ");R 0;} } }
+  H("ez->");a=ev(a);
+  H("ez=> ");R J=j,a; }
 
 I exm(C* expstr,I mode){H("exm ");
  I e,z; 
@@ -603,11 +581,11 @@ I exm(C* expstr,I mode){H("exm ");
  Q(Y-K<30,3)
  z=APL; APL=mode; H("exm->");e=tok(); APL=z;
  Q(!e,15)
- *++K=MS(expstr=scp(expstr));
- z=ez(e); mf((I*)expstr); K--;
- if(!z){ if(!q)q=9; ef(e); R 0; }
- int res=QE(e)&&XE(e)->f==MN(0)?(H("exm->"),ef(e),H("exm->"),dc((A)z),(I)aplus_nl):(H("exm->"),ef(e),z);
- H("exm=> ");R res; }
+ H("exm->");*++K=MS(expstr=scp(expstr)); H("expstr:%s \n",expstr);
+ H("e:%ld exm->",e);z=ez(e); H("exm->");mf((I*)expstr); K--;
+ if(!z){ if(!q)q=9; H("exm->");ef(e); R 0; }
+ I res=QE(e)&&XE(e)->f==MN(0)?(H("exm->"),ef(e),H("exm->"),dc((A)z),(I)aplus_nl):(H("exm->"),ef(e),z);
+ H("res:%lld exm=> ",res);R res; }
 
 extern I Gf,Xf,doErrorStack;
 I pev(I a)
