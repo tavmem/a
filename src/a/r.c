@@ -124,9 +124,9 @@ Z I me(I n,I f,I a,I b,I c)
      a=ee(e);
      *r=a;
      ef(ME(e));
-     H("me=>");R a;
+     H("me=> ");R a;
    } else {
-     H("me=>");R ME(e);
+     H("me=> ");R ME(e);
    }
 }
 Z I mr(void){H("mr ");I r=*t&&*t!=';'&&*t!=')'&&*t!=']'&&*t!='}'&&*t!=ELSE;H("mr=> ");R r;}
@@ -182,33 +182,34 @@ Z I r_rf(void){H("rf(r.c)\n");H("rf->");I a=rt(),f;
 
 Z I vs(E e){DO(e->n,if(!vl(e->a[i]))R 0)R 1;}
 I peak(I f){E e=XE(f);R QE(f)&&e->f==MN(9)&&*e->a==MP(74);}
-Z I as(I a){I z;E e;if(!(pvl(a)||QE(a)&&(e=XE(a),peak(e->f)||(e->f==MN(7)?vs(e):
-  e->f!=MP(36)&&e->f!=MP(74)&&rvl(e->a[e->f==MX(0)?0:e->n-1])))))prr(5,0);
- ++t,z=me(2,MN(0),a,re(),0);if(QV(a))XV(a)->t=y;R z;}
 
- Z I re(void){H("re ");
-   I f,a,w; I bertmp;
-   H("reFa->"); a=r_rf();
-   H("re->"); if(!mr()) {H("reZa=> ");R a;}
-   if(*t==MN(0)) {H("reZb=> "); R as(a);}
-   if(y>1){H("re1->"); prr(1,0);}
-   H("f:%ld y:%ld\n",f,y);
-   if(f=!y){H("reFb->");f=r_rf(); if(y!=1){H("re2->"); prr(2,a);}}
-   H("reE->");w=re();
-   if(y){H("re3->"); prr(3,0);}
-   if(f){H("re->"); bertmp=me(2,f,a,w,0); H("\nreZc=> "); R bertmp;}
-   else{H("\nreZd=> "); R me(1,a,w,0,0);} }
+Z I as(I a){H("as ");I z;E e; I tmp;
+  if(!(pvl(a)||QE(a)&&(e=XE(a),peak(e->f)||(e->f==MN(7)?vs(e):
+  e->f!=MP(36)&&e->f!=MP(74)&&rvl(e->a[e->f==MX(0)?0:e->n-1])))))prr(5,0);
+  ++t;
+  H("as->");tmp=re(); H("as->");z=me(2,MN(0),a,tmp,0);
+  if(QV(a))XV(a)->t=y;
+  H("as=> ");R z;}
+
+Z I re(void){H("re "); I res;
+  I f,a,w; I bertmp;
+  H("reFa->"); a=r_rf();
+  H("re->"); if(!mr()) {H("reZa=>\n");R a;}
+  if(*t==MN(0)){H("re->");res=as(a);H("rezB=> ");R res;}
+  if(y>1){H("re1->"); prr(1,0);}
+  H("f:%ld y:%ld\n",f,y);
+  if(f=!y){H("reFb->");f=r_rf(); if(y!=1){H("re2->"); prr(2,a);}}
+  H("reE->");w=re();
+  if(y){H("re3->"); prr(3,0);}
+  if(f){H("re->"); bertmp=me(2,f,a,w,0); H("\nreZc=> "); R bertmp;}
+  else{H("\nreZd=> "); R me(1,a,w,0,0);} }
 
 Z I lk(I s,A f){I i;if(!f)R 0;if(f->r>1)DO(f->r,if(f->d[i]==s)R ML(i))
- for(i=f->n;--i;)if(f->p[i]==s)R ML(-i);R 0;
-}
-Z I rz(I *b0)
-{ H("rz ");
-  I i;
-  for(r=t=b0;*r;++r)
-    if(QS(*r)&&!ispu(*r)) *r=(i=lk(*r,(A)(Qs?Qs:*X))) ? i : MV(vi(XS(*r),Cx));
-  H("rz->"); I res=re(); H("rz=> "); R res;
-}
+ for(i=f->n;--i;)if(f->p[i]==s)R ML(-i);R 0; }
+
+Z I rz(I *b0){ H("rz "); I i;
+  for(r=t=b0;*r;++r) if(QS(*r)&&!ispu(*r)) *r=(i=lk(*r,(A)(Qs?Qs:*X))) ? i : MV(vi(XS(*r),Cx));
+  H("rz->"); I res=re(); H("rz=> "); R res; }
 
 void f0(C *s){A aobj=(A)sv(Cx,si(s))->e;if(aobj)H("%s\n",(C*)aobj->p[aobj->n+1]);}
 void f1(C *s){I *l=sv(Cx,si(s))->l;for(;l;l=(I*)*l)H("%s ",((V)l[1])->s->n);NL;}

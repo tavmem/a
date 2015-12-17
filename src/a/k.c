@@ -158,26 +158,13 @@ I profileExecute(n,P1,P2,i) I n,i; I (*P1[])(),(*P2[])();
   R n==2?(*P2[i])(*Y,Y[1],i):(*P1[i])(*Y,i);
 }
 
-I ic(A aobj)
-{
+I ic(A aobj){H("ic ");
 /*
   R!(aobj&&QA(aobj))?(I)aobj:aobj->c?(++aobj->c,(I)aobj):im((I)aobj);
 */
-	if (!(aobj && QA(aobj)))
-		{
-		return (I)aobj ;
-		}
-	else
-		{
-		if (aobj->c)
-			{
-			++aobj->c ;
-			return (I)aobj ;
-			}
-		else
-			return im((I)aobj) ;
-		}
-	}
+	if(!(aobj && QA(aobj))){H("ic=> ");R (I)aobj;}
+	else{ if(aobj->c){ ++aobj->c; H("ic=> ");R (I)aobj; }
+	      else{H("ic=> ");R im((I)aobj);} } }
 
 void dc(A aobj)
 {H("dc ");
@@ -213,9 +200,9 @@ void ef(I arg){H("ef ");
   E epr;
   if(!QE(arg)){H("ef->");dc((A)arg);H("ef=> ");R;}
   epr=XE(arg);
-  DO(epr->n,ef(epr->a[i]));
-  ef(epr->f);
-  mf((I *)epr); H("ef=> ");}
+  DO(epr->n,H("ef->");ef(epr->a[i]));
+  H("ef->");ef(epr->f);
+  H("ef->");mf((I *)epr); H("ef=> ");}
 
 I *k_tm(I n){H("tm(k.c) "); Z I *ta=0;
  if(ta){H("mf ");mf(ta);}
@@ -283,10 +270,10 @@ I tr1(I r,I *d) {
 
 #define GA(_t,_r,_n,x) \
 {\
-  I _f=_t==Ct;A z=(A)mab(_f+AH+Tt(_t,_n)); \
+  H("GA ");I _f=_t==Ct;H("GA->");A z=(A)mab(_f+AH+Tt(_t,_n)); \
   z->c=1,z->t=_t,z->r=_r,z->n=_n;x; \
   if(_f)((C*)z->p)[_n]=0; \
-  R z;}
+  H("GA=> ");R z;}
 
 /* GA_OA overallocates by the max of 2*n or 10 meg */
 #define GA_OA(_t,_r,_n,x) \
@@ -321,15 +308,13 @@ I ev(I z){if(q)aplus_err(q,(A)(QE(z)?XE(z)->f:z));EV(z) R z;}
 #else
  I ev(I z){H("ev ");
    if(q)aplus_err(q,(A)(QE(z)?XE(z)->f:z));
-   { I t;
-     E etmp;
-     I itmp;
+   { I t; E etmp; I itmp; H("switch:%d ",aplusMask&z);
      switch(aplusMask&z){
        CS(0,ic((A)z))
        case 3:
         itmp = (I)(z)&~aplusMask;
-        etmp = (E)itmp;
-        z=ee(etmp);
+        etmp = (E)itmp;       /* (k.h)  typedef struct e{I n,f,a[2];}*E   */
+        H("ev->");z=ee(etmp);
         break;
        CS(1,ic((A)(z=(I)gt(XV(z)))))
        CS(5,for(;!(t=X[U(z)]);)aplus_err(4,(A)z);ic((A)(z=t))) } }
@@ -337,35 +322,23 @@ I ev(I z){if(q)aplus_err(q,(A)(QE(z)?XE(z)->f:z));EV(z) R z;}
 #endif
 
 extern I PX(I,I),(*PN[])(E),(*P1[])(I,I),(*P2[])(I,I,I);
-I ee(E expr)
-{
-  I z = 0,i,n,fnc; 
-	fnc = expr->f;
-  if(QN(fnc))
-    R(*PN[U(fnc)])(expr);
-  for(i=n=expr->n;i;*--Y=z)
-  {
-    z=expr->a[--i];
-    EV(z);
-  }
+
+I ee(E expr) {H("ee "); I res;
+  I z = 0,i,n,fnc; fnc=expr->f;
+  if(QN(fnc)){ H("U(fnc):%ld ",U(fnc)); H("ee->");res=(*PN[U(fnc)])(expr);  H("ee=> ");R res; }
+  for(i=n=expr->n;i;*--Y=z){ z=expr->a[--i]; EV(z); }
   EV(fnc);
-  if(QA(fnc))
-  {
+  if(QA(fnc)) {
     ++n;
     *--Y=fnc;
-    if(((A)fnc)->t>Xt+1)
-      R z=(I)ga(Xt,n,0L,Y),Y+=n,z;
-    z=af(n);
-  }
-  else
-  {
+    if(((A)fnc)->t>Xt+1) R z=(I)ga(Xt,n,0L,Y),Y+=n,z;
+    z=af(n); }
+  else {
     i=U(fnc);
     EQ(0,QX(fnc)?(i?PX(i,n):xin((A)*Y,n-1,(A)0)):
-       n==2?(*P2[i])(*Y,Y[1],i):(*P1[i])(*Y,i));
-  }
-  DO(n,dc((A)(*Y++)));
-  R z;
-}
+       n==2?(*P2[i])(*Y,Y[1],i):(*P1[i])(*Y,i)); }
+  DO(n,H("ee->");dc((A)(*Y++)));
+  H("ee=> ");R z; }
 
 I fa(I fnc,I a,I w)
 {
@@ -504,7 +477,8 @@ Z I enc(I a){A z=gs(Et);R *z->p=a,(I)z;}
 Z I gap(A a,A w){I v=a->r&&a->r==w->r,n=v?*w->d:1;A z=v?gv(It,n):gs(It);
  DO(z->n,z->p[i]=*a->d+i)R enc((I)z);}
 Z I gia(A i,I r){R!r&&i&&i->t<Et?enc((I)i):(I)i;}
-Z I upd(I x,I d,I i,A p,I r,I o){
+
+Z I upd(I x,I d,I i,A p,I r,I o){H("upd ");
   I f=QV(x),a,*z,g=i==MP(22);
   V v=f?XV(x):(V)(X+U(x));
   extern I Sf;
@@ -523,7 +497,7 @@ Z I upd(I x,I d,I i,A p,I r,I o){
     Q(!p&&!i&&v->o&&!vfy(v,(A)d),17);
   }  
   if(!z)R 0;
-  a=!i?(dc((A)*z),*z=ic((A)d)):in((A *)z,g,f,(A)i,(A)d,r);
+  a=!i?(H("upd->"),dc((A)*z),H("upd->"),*z=ic((A)d)):in((A *)z,g,f,(A)i,(A)d,r);
   if( msyncMode && v && v->a && QA(v->a) && 
       ((A)(v->a))->c==0 && ((A)(v->a))->t<4)
     {
@@ -566,13 +540,16 @@ Z I upd(I x,I d,I i,A p,I r,I o){
     val(v);
   }
   if(o&&v->o)xup(v,(A)d,(A)i,p,r,DependencyEvaluationSemaphore?0:1); /*  call xup() unless in the middle of re-evaluation */
-  R q?0:1;
+  H("upd=>\n");R q?0:1;
 }
 
-I set(I x,I a,I o)
-{
-  I r;
-  R *--Y=a,*--Y=0,*--Y=0,r=upd(x,a,0,0,0,o),dc((A)Y[2]),Y+=3,r;
+I set(I x,I a,I o){H("set "); I r;
+  //R *--Y=a,*--Y=0,*--Y=0,r=upd(x,a,0,0,0,o),dc((A)Y[2]),Y+=3,r;
+  *--Y=a;*--Y=0;*--Y=0;
+  H("set->");r=upd(x,a,0,0,0,o);
+  H("set->");dc((A)Y[2]);
+  Y+-3;
+  H("set=> ");R r;
 }
 
 I aset(I v,I d,I i,I p)
@@ -618,19 +595,16 @@ Z I pea(E e,A w)
 }
 Z I mrg(I e){R *--Y=0,*--Y=0,e=mr0((E)e),dc((A)*Y++),dc((A)(*Y++)),e;}
 /* #if defined(__SVR4) || defined(_SYSTYPE_SVR4) || defined(__VISUAL_C_2_0__) */
+
 #if 1
-I xis(E e)
-{
-  I n=e->n-1,a=*e->a,w=e->a[n];
+I xis(E e){H("xis "); I n=e->n-1,a=*e->a,w=e->a[n]; I tmp;
 /*  EV(w) */
 /*	printf("In xis, n = %ld, a = %ld, w = %ld\n", n, a, w) ; */
 /*	printf("aplusMask&w = %ld\n", aplusMask&w) ; */
 	{
-    I t;
-    E etmp;
-    I itmp;
+    I t; E etmp; I itmp; H("switch:%d ",aplusMask&w);
     switch(aplusMask&w){
-      CS(0,ic((A)w))
+      CS(0,H("xis->");ic((A)w))
       CS(1,ic((A)(w=(I)gt(XV(w)))))
       case 3:
        itmp = (I)(w)&~aplusMask;
@@ -652,13 +626,15 @@ I xis(E e)
 	Glbrtn = (void *)w ;
 	longjmp(J,(int)w);
 	}
+  H("!QE(a):%d ",!QE(a));
   for(*--Y=w;
-      !(!QE(a)?set(a,ic((A)w),1):
+    //!(!QE(a)?H("xis->"),set(a,ic((A)w),1):
+      !(!QE(a)?H("xis->"),tmp=ic((A)w),H("xis->"),set(a,tmp,1):
 	(e=XE(a),e->f==MN(7))?lst(e->n,e->a,(A)w):
 	peak(e->f)?pea(e,(A)w):
 	mrg((I)e));)
     aplus_err(q,(A)MN(0));
-  R *Y++;
+  H("xis=> ");R *Y++;
 }
 #else
 I xis(E e)
@@ -674,6 +650,7 @@ I xis(E e)
   R *Y++;
 }
 #endif
+
 Z A e0(E e,A a)
 {
   I *r=e->a+e->n-1;

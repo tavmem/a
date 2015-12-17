@@ -140,7 +140,7 @@ char * mab(unsigned long w)
 
 long *ma(unsigned long w)  /* w - number of words required */
 { printf("ma ");
-  C *res=(long *)(mab(w*sizeof(long)));
+  printf("ma->");C *res=(long *)(mab(w*sizeof(long)));
   printf("ma=> ");return res;
 }
 

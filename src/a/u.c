@@ -245,10 +245,10 @@ V sv(CX c,S s){C *t=(C *)strchr(s->n,'.'),b[99];
  if(t)*t=0,strcpy(b,s->n),*t='.',c=cxi(si(b)),s=si(t+1);R vi(s,c);}
 V svlu(CX c,S s){C *t=(C *)strchr(s->n,'.'),b[99];
  if(t)*t=0,strcpy(b,s->n),*t='.',c=cxlu(si(b)),s=si(t+1);R c?vlu(s,c):(V)0;}
-I ispu(I c){R c==':'||c==';'||c=='('||c==')'||c=='{'||c=='}'||c=='['||c==']';}
+I ispu(I c){H("ispu=> ");R c==':'||c==';'||c=='('||c==')'||c=='{'||c=='}'||c=='['||c==']';}
 Z I issp(I c){R c==' '||c=='\n'||c=='\t'||c==12;}
 I isal(I c){R c>='a'&&c<='z'||c>='A'&&c<='Z'||c=='_';}
-I isdi(I c){R c>='0'&&c<='9';}
+I isdi(I c){H("isdi=> ");R c>='0'&&c<='9';}
 I isan(I c){R isal(c)||isdi(c);}
 
 /*
@@ -256,13 +256,12 @@ I isan(I c){R isal(c)||isdi(c);}
  * handles negatives (high or low minus, depending on mode) and "Inf".
  * Result: 1 on success, 0 on failure - number loaded in d, and s advanced
  */
-Z I readDoubleFromString(C **s,F *d)
-{
+Z I readDoubleFromString(C **s,F *d){ H("std ");
   C *r=*s;
   I i='\242'==*r||(1!=APL)&&'-'==*r,j;
   r+=i;
   j=strncmp(r,"Inf",3)||isal(r[3]);
-  if(j&&!isdi(r['.'==*r]))R 0;
+  H("std->");if(j&&!isdi(r['.'==*r])){H("std=> ");R 0;}
   if(!j)*s=r+3,*d=Inf;
 #if defined(linux) || defined(__CYGWIN__)
 /* Linux's strtod differs from other implementations in that it also */
@@ -283,7 +282,7 @@ Z I readDoubleFromString(C **s,F *d)
     for(*d=strtod(r,s);**s=='0';++*s);
 #endif
   if(i)*d=-*d;
-  R 1;
+  H("std=> ");R 1;
 }
 
 extern I dbg_txeq;
@@ -307,7 +306,7 @@ Z void trr(I q,C *s,C *e,C c){H("trr ");
 /* changing to char cast */
 Z void brr(I c){if(!G)H("TOKEN: open %c\n",(char)c);tc(tb);}
 
-Z I u_rs(C *v,I i){H("rs ");
+Z I u_rs(C *v,I i){H("rs(u.c) ");
   I t=0; C c=*s; *s=0;
   if(i&&(*v=='\312'||(t=aplus_pi(v)))) {
     if(c=='/'||c=='\\'||c=='\256'||c=='.'&&!isan(s[1])) {
@@ -360,7 +359,7 @@ A gsv(I i,const C *s)
 }
 A gst(I x,C *s){A r=(A)gsv(x,s);r->r=1;return r;}
 /* gst() is a cover for gsv() which always returns a vector. */
-Z I gvs(I t,I n,I *s){R(I)gc(t,n!=1,n,&n,s);}
+Z I gvs(I t,I n,I *s){H("gvs gvs->");I res=(I)gc(t,n!=1,n,&n,s);H("gvs=> ");R res;}
 
 A gvi(I t, I n,...) {
   I x; A z; va_list ap; P zp;
@@ -375,9 +374,9 @@ A gvi(I t, I n,...) {
   va_end(ap);
   R z; }
 
-Z I rw(){H("rw ");
+Z I rw(){H("rw "); I res;
   I n=0,y; F d[9999]; C c=*s,*v=s; extern I *XY;
-  if(ispu(c)&&(c!=':'||s[1]!='='))R *s++;
+  H("rw->");if(ispu(c)&&(c!=':'||s[1]!='='))R *s++;
 
   /* look for a si argument */
   if(c==SI_CHAR) {
@@ -390,52 +389,49 @@ Z I rw(){H("rw ");
   if((n=c=='"')||c=='\'')R ++v,H("rw->"),rq(c),*s=0,n=(I)gsv(n+1,v),*s++=c,n;
 
   /* look for a symbol constant */
-  for(n=0;*s=='`';H("rw->"),s=cl(s)){s=ssym(v=s);t[n++]=u_rs(v+1,0);}
-  if(n)R gvs(Et,n,t);
+  for(n=0;*s=='`';H("rw->"),s=cl(s)){s=ssym(v=s);H("rw->");H("rw->");t[n++]=u_rs(v+1,0);}
+  if(n){res=gvs(Et,n,t);H("rw=> ");R res;}
 
   /* look for a numeric constant */
-  for(;readDoubleFromString(&s,d+n);s=dlb(s))if(++n==9999)trr(1,"",0,0);
+  for(;H("rw->"),readDoubleFromString(&s,d+n);s=dlb(s))if(++n==9999)trr(1,"",0,0);
   /* doubles now loaded in d, n is howmany, s is at next token */
   if(n) {
     C c=*s;*s=0;y=(I)strpbrk(v,".Ee"),*s=c;
     if(!y)DO(n,if(y=d[i]!=(t[i]=d[i])){q=0;break;});
-    R gvs(y?Ft:It,n,y?(I*)d:t); }
+    H("rw->");res=gvs(y?Ft:It,n,y?(I*)d:t);H("rw=> ");R res;}
 
   /* look for a uni-mode compound (X.#) primitive */
   if(APMODE_UNI==APL&&isal(*v)&&'.'==v[1]&&(n=rs_uni(v)))R n;
 
   /* look for a name */
-  if(H("rw->"),s=cl(s),n=isal(*s)){s=sy(v=s);n=u_rs(v,2);}
+  if(H("rw->"),s=cl(s),n=isal(*s)){s=sy(v=s);H("rw->");n=u_rs(v,2);}
   if(*s=='.'&&isal(s[1])&&(QS(n)||!n)) {
     s=sy(v=s+1);
-    y=u_rs(v,2);
+    H("rw->");y=u_rs(v,2);
     if (QS(y)) R MV(vi(XS(y),n?cxi(XS(n)):Rx));
     else trr(2,".",0,0);  /* trr does longjmp */  }
-  if(n)R n;
+  if(n){H("rw=> ");R n;}
   if(*++s=='='||*s==':')++s;
-  H("rw->");I res=u_rs(v,1); H("rw=> ");R res; }
+  H("rw->");res=u_rs(v,1); H("rw=> ");R res; }
 
-Z I ra(I k){H("ra ");
+Z I ra(I k){H("ra "); H("tb:");DO(5,H(" %d",tb[i]);)H("... ");
   r=s; t=tb; if(k)*t++='{';
   for(;*s;++t,H("ra->"),s=cl(s)){H("ra->");*t=rw();}
   if(k)*t++='}';
-  *t=0;
+  *t=0; H("tb:");DO(5,H(" %d",tb[i]);)H("... ");
   H("ra->");I res=rd(tb); H("ra=> ");R res;
 }
 
 Z I u,c,v;void tfl(void){/*ioctl?*/fflush(stdout);}
 void pr(void){q=0;if(!Reset){DO(u+v,H("*"))H("     "),tfl();}}
 
-Z I chk(void){H("chk ");
- if(c){ H("chk->");if(--s,!rq(c)){H("f1=> ");R c;} }
+Z I chk(void){H("chk s:%s",s);
+ if(c)H("have_c ");else H("no_c "); if(c){ H("chk->");if(--s,!rq(c)){H("f1=> ");R c;} }
  else --v,++s;
  for(;H("chk->"),s=cl(s),c=*s;++s){
-  if(c=='"'||c=='\''){H("f1->");if(!rq(c)){H("f1=> ");R ++v;}}
-  if(c=='{'||c=='(')++v;
-  else if(c=='}'||c==')')--v;}
- if(v<0){H("chk=> ");R v=0;}
- else {H("chk=> ");R v>0||s[-2]==":";}
-}
+  if(c=='"'||c=='\''){H("chk->");if(!rq(c)){H("chk=> ");R ++v;}}
+  if(c=='{'||c=='(')++v; else if(c=='}'||c==')')--v;}
+ R v<0?(v=0):v>0||s[-2]==":";} 
 
 void ff(A a){H("ff ");
  H("ff->");if(Tf&&!qz(a)){ H("ff->");paf(a,0,0); NL; H("paf=> "); tfl();}
@@ -479,7 +475,7 @@ Z I AbortLoad=0;
 Z C sb[99999],*b=sb;void sbi(void){H("sbi ");b=sb,*b=c=v=0;H("sbi=>");}
 C *sj(C *s,I j){R strncpy(sb,s,j),sb[j]=0,sb;}
 
-Z I u_f1(FILE *f){H("f1 ");
+Z I u_f1(FILE *f){H("f1(u.c) ");
   I n=sb+sizeof(sb)-b;
   if(Reset) --Reset, --u, longjmp(J, -3); 
   if(EoF=!fgets(b,n,f?f:stdin)){if(f){H("f1=> ");R 0;} exit(1);}
@@ -558,7 +554,7 @@ Z I tok(void){H("tok ");
   if(setjmp(J=b))z=0;
   else{ H("tok->");I tmp=bal(0); H("tok->");z=ra(tmp); } 
   K=k,Cx=c; J=j;
-  H("t:%p *t:%ld b:%s z:%ld tok=> ",t,*t,b,z); R z; }
+  H("t:%p *t:%ld b:%s z:%ld tok=>\n",t,*t,b,z); R z; }
 
 I ez(I a){H("ez "); jmp_buf b; jmptype j=J; I *k=K,*x=X,*y=Y,i; CX c=Cx;
   q=0;
@@ -571,7 +567,7 @@ I ez(I a){H("ez "); jmp_buf b; jmptype j=J; I *k=K,*x=X,*y=Y,i; CX c=Cx;
       if(i != -3){i=(I)Glbrtn; H("ex=> ");R i;}
       else{H("ex=> ");R 0;} } }
   H("ez->");a=ev(a);
-  H("ez=> ");R J=j,a; }
+  H("ez=>\n");R J=j,a; }
 
 I exm(C* expstr,I mode){H("exm ");
  I e,z; 
@@ -582,7 +578,7 @@ I exm(C* expstr,I mode){H("exm ");
  z=APL; APL=mode; H("exm->");e=tok(); APL=z;
  Q(!e,15)
  H("exm->");*++K=MS(expstr=scp(expstr)); H("expstr:%s \n",expstr);
- H("e:%ld exm->",e);z=ez(e); H("exm->");mf((I*)expstr); K--;
+ H("exm->");z=ez(e); H("exm->");mf((I*)expstr); K--;
  if(!z){ if(!q)q=9; H("exm->");ef(e); R 0; }
  I res=QE(e)&&XE(e)->f==MN(0)?(H("exm->"),ef(e),H("exm->"),dc((A)z),(I)aplus_nl):(H("exm->"),ef(e),z);
  H("res:%lld exm=> ",res);R res; }

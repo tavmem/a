@@ -348,7 +348,7 @@ void sys(C *s){
     CS(10,if((chdir(*s?s:getenv("HOME")))==-1){perr(s);break;}setPWD());
     CS(12,if(*s){APL=(s[1]=='p')?APMODE_APL:('n'==s[1])?APMODE_UNI:
 		   APMODE_ASCII;break;}
-       H(APLpick("apl\n","ascii\n","uni\n")));
+       H(APLpick("\napl\n","\nascii\n","\nuni\n")));
     CS(14,for(;*s;*w=d,w=bl(s=cl(w)),d=*w,*w=0)expunge(sv(Cx,si(s))));
     CS(34,for(;*s;*w=d,w=bl(s=cl(w)),d=*w,*w=0)rmd(sv(Cx,si(s))));
     CS(15,if(!*s||!isdi(*s)||s[1]&&!isdi(s[1])){H("%c%c\n",Fs[3],Fs[4]);break;}
