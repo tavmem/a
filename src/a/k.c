@@ -548,9 +548,8 @@ I set(I x,I a,I o){H("set "); I r;
   *--Y=a;*--Y=0;*--Y=0;
   H("set->");r=upd(x,a,0,0,0,o);
   H("set->");dc((A)Y[2]);
-  Y+-3;
-  H("set=> ");R r;
-}
+  Y+=3;
+  H("set=> ");R r; }
 
 I aset(I v,I d,I i,I p)
 {
