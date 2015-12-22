@@ -184,7 +184,6 @@ void dc(A aobj)
         { H("Td:if(!--aobj->c):%d\n",!(aobj->c-1));
           if(!--aobj->c) dec(aobj);
         }
-      H("\n");
     }
     else{H("dc->");dm(aobj);}
   }
