@@ -567,7 +567,7 @@ I ez(I a){H("ez "); jmp_buf b; jmptype j=J; I *k=K,*x=X,*y=Y,i; CX c=Cx;
       if(i != -3){i=(I)Glbrtn; H("ex=> ");R i;}
       else{H("ex=> ");R 0;} } }
   H("ez->");a=ev(a);
-  H("ez=>\n");R J=j,a; }
+  H("ez=> ");R J=j,a; }
 
 I exm(C* expstr,I mode){H("exm ");
  I e,z; 

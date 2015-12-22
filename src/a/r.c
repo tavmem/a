@@ -175,7 +175,7 @@ Z I rl(I f)
    rlbf;
    return ME(e); }
 
-Z I r_rf(void){H("rf(r.c)\n");H("rf->");I a=rt(),f;
+Z I r_rf(void){H("rf\n");H("rf->");I a=rt(),f;
  H("rf->");I r1=mr(); H("rf->");I r2=ty(f= *t); for(;r1&&r2>1;y=1)
   if(++t,a=ty(f)==2?me(1,f,a,0,0):me(2,f,a,rt(),0),y>1)prr(1,0);
  int res=*t=='{'&&(!QN(a)||MN(6)==a)?rl(a):a; H("rf=> "); R res; }
@@ -193,15 +193,15 @@ Z I as(I a){H("as ");I z;E e; I tmp;
 
 Z I re(void){H("re "); I res;
   I f,a,w; I bertmp;
-  H("reFa->"); a=r_rf();
+  H("reA->"); a=r_rf();
   H("re->"); if(!mr()) {H("reZa=>\n");R a;}
   if(*t==MN(0)){H("re->");res=as(a);H("rezB=> ");R res;}
   if(y>1){H("re1->"); prr(1,0);}
   H("f:%ld y:%ld\n",f,y);
-  if(f=!y){H("reFb->");f=r_rf(); if(y!=1){H("re2->"); prr(2,a);}}
+  if(f=!y){H("reB->");f=r_rf(); if(y!=1){H("re2->"); prr(2,a);}}
   H("reE->");w=re();
-  if(y){H("re3->"); prr(3,0);}
-  if(f){H("re->"); bertmp=me(2,f,a,w,0); H("\nreZc=> "); R bertmp;}
+  if(y){H("reC->"); prr(3,0);}
+  if(f){H("reD->"); bertmp=me(2,f,a,w,0); H("\nreZc=> "); R bertmp;}
   else{H("\nreZd=> "); R me(1,a,w,0,0);} }
 
 Z I lk(I s,A f){I i;if(!f)R 0;if(f->r>1)DO(f->r,if(f->d[i]==s)R ML(i))

@@ -546,8 +546,8 @@ Z I mapDotMFile(int fd,int mode,C *fname,C *t)
 
 I isWritableFile(I a){MFInfo *p=findMFInfoStruct((A)a);R p?p->w:0;}
 I im(I a){MFInfo *p=findMFInfoStruct((A)a);if(p)++p->c;R a;}
-void dm(A a)
-{
+
+void dm(A a) {H("dm ");
   MFInfo *p=findMFInfoStruct(a);
   if(p){
     if(!--p->c){

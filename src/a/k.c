@@ -168,20 +168,25 @@ I ic(A aobj){H("ic ");
 
 void dc(A aobj)
 {H("dc ");
+  H("\n\nTa:if(aobj&&aplus_nl!=aobj&&QA(aobj):%d (I)aobj:%ld aplus_nl!=aobj:%d QA(aobj):%d (I)aplus_nl:%ld\n",
+    aobj&&aplus_nl!=aobj&&QA(aobj),(I)aobj,aplus_nl!=aobj&&QA(aobj),QA(aobj),(I)aplus_nl);
+  //A tst=gv(Et,0); tst->c=0; H("\n(I)tst:%ld\n",(I)tst);
   if(aobj&&aplus_nl!=aobj&&QA(aobj))
-  {
+  { H("Tb:if((aplusPageMask&(I)aobj)&&aobj->c):%d aplusPageMask:%ld (I)aobj:%ld aobj->c:%ld\n",
+             (aplusPageMask&(I)aobj)&&aobj->c,aplusPageMask,(I)aobj,aobj->c);
     if((aplusPageMask&(I)aobj)&&aobj->c)
-    {
+    { H("Tc:if(-1==aobj->c):%d aobj->c:%ld\n",-1==aobj->c,aobj->c);
       if(-1==aobj->c)
-	{
-	  H("memory violation flag dc(%ld) aborted \n",aobj);
-	}
+        {
+          H("memory violation flag dc(%ld) aborted \n",(I)aobj);
+        }
       else
-	{ 
-	  if(!--aobj->c) dec(aobj);
-	}
+        { H("Td:if(!--aobj->c):%d\n",!(aobj->c-1));
+          if(!--aobj->c) dec(aobj);
+        }
+      H("\n");
     }
-    else dm(aobj);
+    else{H("dc->");dm(aobj);}
   }
   H("dc=> ");
 }
@@ -206,7 +211,7 @@ void ef(I arg){H("ef ");
 
 I *k_tm(I n){H("tm(k.c) "); Z I *ta=0;
  if(ta){H("mf ");mf(ta);}
- if(ta=n){H("tm->");I *res=ma(n); H("tm=> ");R res;}
+ if(ta=(I*)n){H("tm->");I *res=ma(n); H("tm=> ");R res;}
  else{H("tm=> ");R 0;} }
 
 void mv(I *dest,I *src,I n){DO(n,*dest++=*src++)}
@@ -308,7 +313,7 @@ I ev(I z){if(q)aplus_err(q,(A)(QE(z)?XE(z)->f:z));EV(z) R z;}
 #else
  I ev(I z){H("ev ");
    if(q)aplus_err(q,(A)(QE(z)?XE(z)->f:z));
-   { I t; E etmp; I itmp; H("switch:%d ",aplusMask&z);
+   { I t; E etmp; I itmp; H("switch:%ld ",aplusMask&z);
      switch(aplusMask&z){
        CS(0,ic((A)z))
        case 3:
@@ -318,7 +323,7 @@ I ev(I z){if(q)aplus_err(q,(A)(QE(z)?XE(z)->f:z));EV(z) R z;}
         break;
        CS(1,ic((A)(z=(I)gt(XV(z)))))
        CS(5,for(;!(t=X[U(z)]);)aplus_err(4,(A)z);ic((A)(z=t))) } }
-   H("z:%lld ev=> ",z);R z; }
+   H("z:%ld ev=> ",z);R z; }
 #endif
 
 extern I PX(I,I),(*PN[])(E),(*P1[])(I,I),(*P2[])(I,I,I);
@@ -540,7 +545,7 @@ Z I upd(I x,I d,I i,A p,I r,I o){H("upd ");
     val(v);
   }
   if(o&&v->o)xup(v,(A)d,(A)i,p,r,DependencyEvaluationSemaphore?0:1); /*  call xup() unless in the middle of re-evaluation */
-  H("upd=>\n");R q?0:1;
+  H("upd=>");R q?0:1;
 }
 
 I set(I x,I a,I o){H("set "); I r;
@@ -601,7 +606,7 @@ I xis(E e){H("xis "); I n=e->n-1,a=*e->a,w=e->a[n]; I tmp;
 /*	printf("In xis, n = %ld, a = %ld, w = %ld\n", n, a, w) ; */
 /*	printf("aplusMask&w = %ld\n", aplusMask&w) ; */
 	{
-    I t; E etmp; I itmp; H("switch:%d ",aplusMask&w);
+    I t; E etmp; I itmp; H("switch:%ld ",aplusMask&w);
     switch(aplusMask&w){
       CS(0,H("xis->");ic((A)w))
       CS(1,ic((A)(w=(I)gt(XV(w)))))
